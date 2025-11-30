@@ -1,0 +1,103 @@
+@hostname = localhost
+@port = 5000
+@host = {{hostname}}:{{port}}
+
+### ============================================
+### DEFAULT ROUTES
+### ============================================
+
+### Test about page
+GET http://{{host}}/about
+
+### Test hello page (default)
+GET http://{{host}}/hello
+
+### Test hello page with name
+GET http://{{host}}/hello/Paolo
+
+### ============================================
+### AUTH ROUTES
+### ============================================
+
+### Test login page (GET - mostra form)
+GET http://{{host}}/login
+
+### Test login (POST - gestisce login)
+POST http://{{host}}/login
+Content-Type: application/x-www-form-urlencoded
+
+email=yku197@edu.ti.ch&password=Ciao12345$&remember=false
+
+### Test signup page (GET - mostra form)
+GET http://{{host}}/signup
+
+### Test signup (POST - crea nuovo utente)
+POST http://{{host}}/signup
+Content-Type: application/x-www-form-urlencoded
+
+username=TestUser&email=test@example.com&password=Test12345$
+
+### Test profile page (richiede login)
+GET http://{{host}}/profile
+
+### Test logout (richiede login)
+GET http://{{host}}/logout
+
+### Test admin dashboard (richiede login e ruolo admin)
+GET http://{{host}}/dashboard
+
+### ============================================
+### PAGE ROUTES (richiedono login)
+### ============================================
+
+### Test home page (richiede login)
+GET http://{{host}}/
+
+### Test home page with search query (richiede login)
+GET http://{{host}}/?q=test
+
+### Test track detail (richiede login)
+GET http://{{host}}/track/12345
+
+### Test album detail (richiede login)
+GET http://{{host}}/album/67890
+
+### ============================================
+### USER ROUTES (prefisso /user, richiedono login)
+### ============================================
+
+### Test get user by username (richiede login e ruolo admin)
+GET http://{{host}}/user/user/Arza
+
+### Test get user by ID (richiede login e ruolo admin)
+GET http://{{host}}/user/user/1
+
+### Test create user (POST - richiede login e ruolo admin, usa form data)
+POST http://{{host}}/user/user
+Content-Type: application/x-www-form-urlencoded
+
+username=Paolo&email=paolo.comes@edu.ti.ch&password=Test12345$
+
+### Test get all users (richiede login e ruolo admin)
+GET http://{{host}}/user/users
+
+### Test delete own account (POST - richiede login)
+POST http://{{host}}/user/delete
+Content-Type: application/x-www-form-urlencoded
+
+password=Ciao12345$
+
+### Test admin delete user by ID (POST - richiede login e ruolo admin)
+POST http://{{host}}/user/delete/1
+
+### Test update user email view (GET - richiede login)
+GET http://{{host}}/user/users/update/1
+
+### Test update user email get (GET - richiede login)
+GET http://{{host}}/user/users/update/1/email
+
+### Test update user email (POST - richiede login, usa form data)
+POST http://{{host}}/user/users/update/1
+Content-Type: application/x-www-form-urlencoded
+
+email=yku197@edu.ti.ch

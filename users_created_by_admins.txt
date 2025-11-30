@@ -1,0 +1,6 @@
+{'id': 6, 'username': 'pedro', 'email': 'pedro@example.com', 'create_ts': '2025-11-24 11:16:47.289812'}
+{'id': 4, 'username': 'paolo', 'email': 'paolo.commesso@outlook.com', 'create_ts': '2025-11-28 09:00:48.411389'}
+{'id': 6, 'username': 'user', 'email': 'user@user.com', 'create_ts': '2025-11-30 18:23:32.998167'}
+{'id': 6, 'username': 'user', 'email': 'user@user.com', 'create_ts': '2025-11-30 18:23:32.998167'}
+{'id': 6, 'username': 'user', 'email': 'user@user.com', 'create_ts': '2025-11-30 18:23:32.998167'}
+{'id': 6, 'username': 'user', 'email': 'user@user.com', 'create_ts': '2025-11-30 18:23:32.998167'}

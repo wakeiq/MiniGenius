@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1>Admin dashboard</h1>
+        <p>Tabella utenti</p>
+        <table class="table table-striped">
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>email</th>
+            <th>created</th>
+            <th>Update</th>
+            <th>delete</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.create_ts }}</td>
+            <td>
+                <form method="GET" action="{{ url_for('user.update_user_email_by_id_get',user_id=user.id) }}">
+                    <button type="submit" class="btn btn-secondary">Update user</button>
+                </form>
+            </td>
+            <td>
+                <form method="POST" action="{{ url_for('user.admin_delete',user_id=user.id) }}" onsubmit="return confirm('Are you sure?');">
+                    <button type="submit" class="btn btn-danger">Delete user now</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+
+        </table>
+        
+        <div class="mt-4">
+            <p>Crea un nuovo utente</p>
+            <form method="POST" action="{{ url_for('user.save_user') }}">
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="username" placeholder="Username" required>
+                </div>
+                <div class="mb-3">
+                    <input type="email" class="form-control" name="email" placeholder="Email" required>
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Create User</button>
+            </form>
+            {% if error %}
+                <div class="alert alert-danger mt-3">{{ error }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+
+
+href="{{ url_for('auth.admin_delete',user_id=user.id) }}"

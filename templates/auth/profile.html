@@ -1,0 +1,20 @@
+<!-- auth\profile.html -->
+{% extends "base.html" %}
+
+{% block title %}Flask Profile{% endblock %}
+
+{% block content %}
+<h1 class="title"> Welcome {{ current_user.username }} </h1>
+<form action="{{ url_for('user.delete') }}" method="POST">
+    <div class="mb-3">
+        <p>Insert your password to confirm and delete your account</p>
+        <br>
+        <input type="password" placeholder="Insert password to delete account" name="password"  value="" class="form-control" autofocus="" required>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-danger">Delete Account</button>
+    </div>
+</form>
+<form method="GET" action="{{ url_for('user.update_user_email_by_id_get', user_id=current_user.id) }}">
+    <button type="submit" class="btn btn-primary">Update Email</button>
+{% endblock %}

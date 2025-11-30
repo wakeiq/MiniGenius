@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Track Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    {% if track %}
+        <h1>{{ track.title }}</h1>
+        <p class="lead">di {{ track.primary_artist.name }}</p>
+
+        {% if track.header_image_url %}
+            <img alt="cover track" src="{{ track.header_image_url }}" class="img-fluid mb-3" style="max-width: 300px;">
+        {% endif %}
+
+        <h3 class="mt-4">Dettagli</h3>
+        <ul>
+            <li><strong>ID:</strong> {{ track.id }}</li>
+            <li><strong>Album:</strong> 
+                {% if track.album %}
+                    <a href="{{ url_for('page.album_detail', album_id=track.album.id) }}">
+                        {{ track.album.name }}
+                        {% if track.album.cover_art_url %}
+                            <img src="{{ track.album.cover_art_url }}" alt="cover" style="max-width:50px;">
+                        {% endif %}
+                    </a>
+                {% else %}
+                    Nessun album associato
+                {% endif %}
+            </li>
+            <li><strong>Artista principale:</strong> {{ track.primary_artist.name }}</li>
+            {% if track.featured_artists %}
+            <li><strong>Artisti collaboratori:</strong> 
+                {{ track.featured_artists | map(attribute='name') | join(', ') }}
+            </li>
+            {% endif %}
+            {% if track.producer_artists %}
+            <li><strong>Produttori:</strong> 
+                {{ track.producer_artists | map(attribute='name') | join(', ') }}
+            </li>
+            {% endif %}
+            {% if track.release_date_for_display %}
+            <li><strong>Data pubblicazione:</strong> {{ track.release_date_for_display }}</li>
+            {% endif %}
+            {% if track.song_pageviews %}
+            <li><strong>Visualizzazioni Genius:</strong> {{ track.song_pageviews }}</li>
+            {% endif %}
+            {% if track.tags %}
+            <li><strong>Tags/Generi:</strong> {{ track.tags | join(', ') }}</li>
+            {% endif %}
+            <li><strong>Link Genius:</strong> <a href="{{ track.url }}" target="_blank">Vai alla pagina</a></li>
+        </ul>
+
+        {% if track.song_annotation %}
+        <h3 class="mt-4">Annotazioni principali</h3>
+        <ul>
+            {% for annotation in track.song_annotation[:3] %}
+                <li>{{ annotation | safe }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endif %}
+
+</div>
+{% endblock %}

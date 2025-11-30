@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Home - My little Genius{% endblock %}
+
+{% block content %}
+<div class="container mt-4 text-center">
+    <h1>My little Genius</h1>
+    <p>No lyrics included</p>
+    <p>Benvenuto {{ current_user.username }} </p>
+
+    <form method="GET" action="{{ url_for('page.home') }}" class="d-flex justify-content-center mb-4">
+        <input type="text" name="q" class="form-control me-2" placeholder="Cerca canzoni..." value="{{ query or '' }}">
+        <button type="submit" class="btn btn-primary">Cerca</button>
+    </form>
+
+
+    {% if top_tracks and not query %}
+    <h2>Populars search... </h2>
+
+    <ul class="list-group mb-4">
+
+        {% for track in top_tracks %}
+        <li class="list-group-item">
+            <a href="{{ url_for('page.track_detail', track_id=track['id']) }}">
+                {{ loop.index }}. {{ track['title'] }} - di {{ track['primary_artist']['name'] }}
+            </a>
+
+            {% if track.get('header_image_thumbnail_url') %}
+            <br>
+            <img alt="covers" src="{{ track['header_image_thumbnail_url'] }}" class="img-thumbnail mt-2" style="width:100px; height:100px;" >
+            {% endif %}
+
+        </li>
+        {% endfor %}
+
+
+    </ul>
+
+    {% endif %}
+    {% if query %}
+        {% if tracks %}  
+
+        <h2>Tracks ({{ tracks|length }}) 
+        </h2>
+        <ul class="list-group mb-4">
+
+            {% for track in tracks %} 
+            <li class="list-group-item">
+                <a href="{{ url_for('page.track_detail', track_id=track['id']) }}">
+
+                    {{ track['title'] }} - di {{ track['primary_artist']['name'] }}</a>
+                {% if track.get('header_image_thumbnail_url') %}
+                <img alt="img" src="{{ track['header_image_thumbnail_url'] }}" class="img-thumbnail mt-2" style="width: 100px; height: 100px;">
+                
+                {% endif %}
+            </li >
+
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p > {{ error }} </p>
+
+        {% endif %}
+    {% endif %}
+
+</div>
+
+{% endblock %}

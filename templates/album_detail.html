@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Album Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    {% if album %}
+        <h1>{{ album.name }}</h1>
+        <p class="lead">di {{ album.artist.name }}</p>
+
+        {% if album.cover_art_url %}
+            <img src="{{ album.cover_art_url }}" alt="album cover" class="img-fluid mb-3" style="max-width: 300px;">
+        {% endif %}
+
+        <h3 class="mt-4">Dettagli Album</h3>
+        <ul>
+            <li><strong>ID:</strong> {{ album.id }}</li>
+            <li><strong>Data pubblicazione:</strong> 
+                {% if album.release_date_components %}
+                    {{ album.release_date_components.month }}/{{ album.release_date_components.day }}/{{ album.release_date_components.year }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </li>
+            {% if album.song_pageviews %}
+            <li><strong>Visualizzazioni Genius:</strong> {{ album.song_pageviews }}</li>
+            {% endif %}
+            <li><strong>Link Genius:</strong> <a href="{{ album.url }}" target="_blank">Vai alla pagina</a></li>
+        </ul>
+
+        {% if album.tracks %}
+        <h3 class="mt-4">Tracklist</h3>
+        <ul>
+            {% for track in album.tracks %}
+                <li>
+                    <a href="{{ url_for('page.track_detail', track_id=track.id) }}">{{ track.title }}</a>
+                    {% if track.featured_artists %}
+                        - feat. {{ track.featured_artists | map(attribute='name') | join(', ') }}
+                    {% endif %}
+                    {% if track.producer_artists %}
+                        - prod. {{ track.producer_artists | map(attribute='name') | join(', ') }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if album.description_preview %}
+        <h3 class="mt-4">Descrizione</h3>
+        <p>{{ album.description_preview | safe }}</p>
+        {% endif %}
+    {% endif %}
+
+</div>
+{% endblock %}

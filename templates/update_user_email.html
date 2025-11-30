@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Update User Email{% endblock %}
+{% block content %}
+<div container class="mt-4">
+    <h1>Update Email for User: {{ user.username }}</h1>
+    <form method="POST" action="{{ url_for('user.update_user_email_by_id', user_id=user.id) }}">
+        <div class="mb-3">
+            <label for="email" class="form-label">New Email Address</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Email</button>
+    </form>
+</div>
+{% endblock %}
